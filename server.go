@@ -10,6 +10,7 @@ func main() {
 	app := fiber.New()
 
 	app.Get("/systems/ping", rest.Ping)
+	app.Get("/users/:userId", rest.GetUser)
 
 	app.Listen(":3000")
 }
