@@ -9,16 +9,18 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-func TestGetUserByIdSuccessfully(t *testing.T) {
-	expected := domain.User{Id: "1", Name: "Jane Doe"}
-	mockUserGateway := new(MockUserPort)
-	mockUserGateway.On("GetUserById", "1").Return(&expected, nil)
+func TestGetUserById(t *testing.T) {
+	t.Run("should return user", func(t *testing.T) {
+		expected := domain.User{Id: "1", Name: "Jane Doe"}
+		mockUserGateway := new(MockUserPort)
+		mockUserGateway.On("GetUserById", "1").Return(&expected, nil)
 
-	actual, err := usecase.GetUserById("1", mockUserGateway)
+		actual, err := usecase.GetUserById("1", mockUserGateway)
 
-	assert.NoError(t, err)
-	assert.Equal(t, &expected, actual)
-	mockUserGateway.AssertExpectations(t)
+		assert.NoError(t, err)
+		assert.Equal(t, &expected, actual)
+		mockUserGateway.AssertExpectations(t)
+	})
 }
 
 type MockUserPort struct {
