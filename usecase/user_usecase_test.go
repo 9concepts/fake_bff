@@ -2,32 +2,32 @@ package usecase_test
 
 import (
 	"fake_bff/domain"
+	"fake_bff/mock/mock_port"
 	"fake_bff/usecase"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
+	"go.uber.org/mock/gomock"
 )
 
 func TestGetUserById(t *testing.T) {
 	t.Run("should return user", func(t *testing.T) {
-		expected := domain.User{Id: "1", Name: "Jane Doe"}
-		mockUserGateway := new(MockUserPort)
-		mockUserGateway.On("GetUserById", "1").Return(&expected, nil)
+		ctrl := gomock.NewController(t)
 
-		actual, err := usecase.GetUserById("1", mockUserGateway)
+		defer ctrl.Finish()
+
+		mockUserPort := mock_port.NewMockUserPort(ctrl)
+		mockUserPort.EXPECT().GetUserById("1").Return(&domain.User{Id: "1", Name: "Jane Doe"}, nil).Times(1)
+
+		expected := domain.User{Id: "1", Name: "Jane Doe"}
+
+		actual, err := usecase.GetUserById("1", mockUserPort)
 
 		assert.NoError(t, err)
 		assert.Equal(t, &expected, actual)
-		mockUserGateway.AssertExpectations(t)
 	})
 }
 
-type MockUserPort struct {
-	mock.Mock
-}
-
-func (m *MockUserPort) GetUserById(userId string) (*domain.User, error) {
-	args := m.Called(userId)
-	return args.Get(0).(*domain.User), args.Error(1)
+func NewMockUserPort(ctrl *gomock.Controller) {
+	panic("unimplemented")
 }
