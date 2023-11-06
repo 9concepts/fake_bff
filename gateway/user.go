@@ -5,10 +5,12 @@ import (
 	"fake_bff/driver"
 )
 
-type UserGateway struct{}
+type UserGateway struct {
+	Driver driver.UserDvier
+}
 
-func (_ UserGateway) GetUserById(userId string) (*domain.User, error) {
-	user, err := driver.GetUserById(userId)
+func (g UserGateway) GetUserById(userId string) (*domain.User, error) {
+	user, err := g.Driver.GetUserById(userId)
 
 	if err != nil {
 		return nil, err

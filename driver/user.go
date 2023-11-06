@@ -6,14 +6,22 @@ import (
 	"github.com/hasura/go-graphql-client"
 )
 
-type GetUserByIdQuery struct {
-	User struct {
-		Id   string
-		Name string
-	} `graphql:"user(id: $id)"`
+type UserDvier interface {
+	GetUserById(userId string) (*GetUserByIdQuery, error)
 }
 
-func GetUserById(userId string) (*GetUserByIdQuery, error) {
+type UserDvierImpl struct{}
+
+type User struct {
+	Id   string
+	Name string
+}
+
+type GetUserByIdQuery struct {
+	User User `graphql:"user(id: $id)"`
+}
+
+func (_ UserDvierImpl) GetUserById(userId string) (*GetUserByIdQuery, error) {
 	client := graphql.NewClient("https://graphqlzero.almansi.me/api", nil)
 
 	var query GetUserByIdQuery

@@ -1,6 +1,7 @@
 package rest
 
 import (
+	"fake_bff/driver"
 	"fake_bff/gateway"
 	"fake_bff/usecase"
 
@@ -15,7 +16,9 @@ type User struct {
 
 func GetUser(c *fiber.Ctx) error {
 	userId := utils.CopyString(c.Params("userId"))
-	userGateway := gateway.UserGateway{}
+	userGateway := gateway.UserGateway{
+		Driver: driver.UserDvierImpl{},
+	}
 
 	user, err := usecase.GetUserById(userId, userGateway)
 
