@@ -1,0 +1,11 @@
+{
+  "name": "api-e2e",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "STEPCI_DISABLE_ANALYTICS=1 stepci run workflow.yaml"
+  },
+  "private": true,
+  "devDependencies": {
+    "stepci": "^2.7.2"
+  }
+}

@@ -1,0 +1,8 @@
+name: GET request
+http:
+  url: http://${{env.host}}/systems/ping
+  method: GET
+  check:
+    status: 200
+    jsonpath:
+      $.pong: ok

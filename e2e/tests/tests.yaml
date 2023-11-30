@@ -1,0 +1,6 @@
+systems:
+  steps:
+    - $ref: "systems/get-ping.yaml"
+users:
+  steps:
+    - $ref: "users/get-user.yaml"
