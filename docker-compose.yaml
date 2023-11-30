@@ -1,0 +1,12 @@
+services:
+  postgresql:
+    container_name: fake-go-api-postgresql
+    build: ./db/docker
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: me
+      POSTGRES_DB: fake
+    volumes:
+      - ./db/init:/docker-entrypoint-initdb.d
